@@ -24,12 +24,13 @@
 
 @implementation YETIViewController
 
-- (void)viewDidLoad {
+#pragma mark - UIViewController
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [[FlickrKit sharedFlickrKit] initializeWithAPIKey:@"insert_flickr_api_key_here" sharedSecret:@"insert_flickr_shared_secret_here"];
-    
-    // Do any additional setup after loading the view, typically from a nib.
     
     [self.collectionView registerClass:[FlickrCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([FlickrCollectionViewCell class])];
     [self.collectionView reloadData];
@@ -37,8 +38,12 @@
     FlickrKit *flickrKit = [FlickrKit sharedFlickrKit];
     FKFlickrInterestingnessGetList *interesting = [[FKFlickrInterestingnessGetList alloc] init];
     [flickrKit call:interesting completion:^(NSDictionary *response, NSError *error) {
-        // Note this is not the main thread!
-        if (response) {
+        if (error != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedFailureReason delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            });
+        } else if (response != nil) {
+            // Note this is not the main thread!
             NSMutableArray *photoURLs = [NSMutableArray array];
             for (NSDictionary *photoData in [response valueForKeyPath:@"photos.photo"]) {
                 FlickrPhoto *photo = [[FlickrPhoto alloc] init];
@@ -56,6 +61,8 @@
     }];
 }
 
+#pragma mark - UICollectionViewDataSource
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [self.flickrPhotos count];
@@ -68,6 +75,8 @@
     
     return cell;
 }
+
+#pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -84,4 +93,5 @@
         self.characterLabel.text = photo.title;
     }
 }
+
 @end
