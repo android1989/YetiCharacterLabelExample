@@ -1,7 +1,7 @@
 PODS:
   - FlickrKit (1.0.3)
   - SDWebImage (3.7.0):
-    - SDWebImage/Core
+    - SDWebImage/Core (= 3.7.0)
   - SDWebImage/Core (3.7.0)
 
 DEPENDENCIES:
@@ -9,7 +9,9 @@ DEPENDENCIES:
   - SDWebImage
 
 SPEC CHECKSUMS:
-  FlickrKit: 884ea0173b3f8a1f56fd418f2ae635a03a852294
-  SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
+  FlickrKit: 241b47e21e32f8d2a4f7d8612580afb4c2bbaf48
+  SDWebImage: b42db92951f9d565c55f1d7f1d5efe47e33a7515
 
-COCOAPODS: 0.33.1
+PODFILE CHECKSUM: f35f76f2865f7a677173696c71cdb42baed42c5b
+
+COCOAPODS: 0.39.5059
